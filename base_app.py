@@ -24,6 +24,16 @@
 # Streamlit dependencies
 import streamlit as st
 import joblib,os
+import pickle
+import re
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.tokenize import RegexpTokenizer
+import emoji 
+from preprocessingfunt import data_preprocessing
+from nltk.stem import WordNetLemmatizer
+lemm = WordNetLemmatizer()
 
 # Data dependencies
 import pandas as pd
@@ -41,8 +51,8 @@ def main():
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
-	st.title("Tweet Classifer")
-	st.subheader("Climate change tweet classification")
+	st.title("Climate Change Tweet Classifer")
+	st.subheader("Tweet Sentiment Classification")
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
@@ -62,21 +72,28 @@ def main():
 	# Building out the predication page
 	if selection == "Prediction":
 		st.info("Prediction with ML Models")
-		# Creating a text box for user input
-		tweet_text = st.text_area("Enter Text","Type Here")
 
-		if st.button("Classify"):
-			# Transforming user input with vectorizer
-			vect_text = tweet_cv.transform([tweet_text]).toarray()
-			# Load your .pkl file with the model of your choice + make predictions
-			# Try loading in multiple models to give the user a choice
-			predictor = joblib.load(open(os.path.join("resources/Logistic_regression.pkl"),"rb"))
-			prediction = predictor.predict(vect_text)
+		Listmodels = ['DecisionTree','LinearSVM','LogisticRegression']
+		modelselect = st.selectbox('Choose a Model',Listmodels)
 
-			# When model has successfully run, will print prediction
-			# You can use a dictionary or similar structure to make this output
-			# more human interpretable.
-			st.success("Text Categorized as: {}".format(prediction))
+		if modelselect == 'DecisionTree':
+    			
+			# Creating a text box for user input
+			tweet_text = st.text_area("Enter Text","Type Tweet Here")
+
+			if st.button("Classify"):
+				# Transforming user input with vectorizer
+				# vect_text = tweet_cv.transform([tweet_text]).toarray()
+				# Load your .pkl file with the model of your choice + make predictions
+				# Try loading in multiple models to give the user a choice
+				predictor = joblib.load(open(os.path.join("resources/DecisionTreeClassifier.pkl"),"rb"))
+				preprocessedtext = data_preprocessing(tweet_text)
+				prediction = predictor.predict(preprocessedtext)
+
+				# When model has successfully run, will print prediction
+				# You can use a dictionary or similar structure to make this output
+				# more human interpretable.
+				st.success("Text Categorized as: {}".format(prediction))
 
 # Required to let Streamlit instantiate our web app.  
 if __name__ == '__main__':
