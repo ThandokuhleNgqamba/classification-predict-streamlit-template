@@ -39,7 +39,7 @@ lemm = WordNetLemmatizer()
 import pandas as pd
 
 # Vectorizer
-news_vectorizer = open("resources/tfidf_2.pickle.pkl","rb")
+news_vectorizer = open("resources/tfidf_2.pickle","rb")
 tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
 
 # Load your raw data
@@ -73,10 +73,10 @@ def main():
 	if selection == "Prediction":
 		st.info("Prediction with ML Models")
 
-		Listmodels = ['DecisionTree','LinearSVM','LogisticRegression']
+		Listmodels = ['Decision Tree','Linear SVM','Logistic Regression']
 		modelselect = st.selectbox('Choose a Model',Listmodels)
 
-		if modelselect == 'DecisionTree':
+		if modelselect == 'Decision Tree':
     			
 			# Creating a text box for user input
 			tweet_text = st.text_area("Enter Text","Type Tweet Here")
@@ -95,6 +95,46 @@ def main():
 				# You can use a dictionary or similar structure to make this output
 				# more human interpretable.
 				st.success("Text Categorized as: {}".format(prediction))
+
+		if modelselect == 'Linear SVM':
+    			
+			# Creating a text box for user input
+			tweet_text = st.text_area("Enter Text","Type Tweet Here")
+
+			if st.button("Classify"):
+				# Transforming user input with vectorizer
+				# vect_text = tweet_cv.transform([tweet_text]).toarray()
+				# Load your .pkl file with the model of your choice + make predictions
+				# Try loading in multiple models to give the user a choice
+				predictor = joblib.load(open(os.path.join("resources/LinearSVM.pkl"),"rb"))
+				preprocessedtext = data_preprocessing(tweet_text)
+				vect_text = tweet_cv.transform(preprocessedtext).toarray()
+				prediction = predictor.predict(vect_text)
+
+				# When model has successfully run, will print prediction
+				# You can use a dictionary or similar structure to make this output
+				# more human interpretable.
+				st.success("Text Categorized as: {}".format(prediction))
+
+		if modelselect == 'Logistic Regression':
+    			
+			# Creating a text box for user input
+			tweet_text = st.text_area("Enter Text","Type Tweet Here")
+
+			if st.button("Classify"):
+				# Transforming user input with vectorizer
+				# vect_text = tweet_cv.transform([tweet_text]).toarray()
+				# Load your .pkl file with the model of your choice + make predictions
+				# Try loading in multiple models to give the user a choice
+				predictor = joblib.load(open(os.path.join("resources/LogisticRegression.pkl"),"rb"))
+				preprocessedtext = data_preprocessing(tweet_text)
+				vect_text = tweet_cv.transform(preprocessedtext).toarray()
+				prediction = predictor.predict(vect_text)
+
+				# When model has successfully run, will print prediction
+				# You can use a dictionary or similar structure to make this output
+				# more human interpretable.
+				st.success("Text Categorized as: {}".format(prediction))				
 
 # Required to let Streamlit instantiate our web app.  
 if __name__ == '__main__':
