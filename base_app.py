@@ -39,7 +39,7 @@ lemm = WordNetLemmatizer()
 import pandas as pd
 
 # Vectorizer
-news_vectorizer = open("resources/tfidfvect.pkl","rb")
+news_vectorizer = open("resources/tfidf_2.pickle.pkl","rb")
 tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl file
 
 # Load your raw data
@@ -88,7 +88,8 @@ def main():
 				# Try loading in multiple models to give the user a choice
 				predictor = joblib.load(open(os.path.join("resources/DecisionTreeClassifier.pkl"),"rb"))
 				preprocessedtext = data_preprocessing(tweet_text)
-				prediction = predictor.predict(preprocessedtext)
+				vect_text = tweet_cv.transform(preprocessedtext).toarray()
+				prediction = predictor.predict(vect_text)
 
 				# When model has successfully run, will print prediction
 				# You can use a dictionary or similar structure to make this output
