@@ -51,24 +51,28 @@ def main():
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
-	st.image(['resources\imgs\cars.jpg', 'resources\imgs\emissions.jpg', 'resources\imgs\park.jpg'], width= 200)
-	st.title("Climate Change Tweet Classifer")
+	st.image(['resources\imgs\cars.jpg', 'resources\imgs\park.jpg'], width= 300)
+	st.title("Climate Change Tweet Classifier")
 	st.subheader("Tweet Sentiment Classification")
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
-	options = ["Prediction", "Information","EDA", "Meet the Team","Contact Us","FAQ"]
+	options = ["Prediction", "Model Introduction","Insights", "Meet the Team"]
 	selection = st.sidebar.selectbox("Choose Option", options)
 
 	# Building out the "Information" page
-	if selection == "Information":
-		st.info("General Information")
+	if selection == "Model Introduction":
+		
 		# You can read a markdown file from supporting resources folder
-		st.markdown("Some information here")
+		st.markdown(open('resources/modelintroduction.md').read())
 
 		st.subheader("Raw Twitter data and label")
 		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
 			st.write(raw[['sentiment', 'message']]) # will write the df to the page
+            
+	# Building out the "Meet the team" page
+	if selection == "Meet the Team":
+		st.markdown(open('resources/meettheteam.md').read())
 
 	# Building out the predication page
 	if selection == "Prediction":
