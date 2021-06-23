@@ -51,6 +51,7 @@ def main():
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
+	st.image(['resources\imgs\cars.jpg', 'resources\imgs\emissions.jpg', 'resources\imgs\park.jpg'], width= 200)
 	st.title("Climate Change Tweet Classifer")
 	st.subheader("Tweet Sentiment Classification")
 
@@ -134,6 +135,7 @@ def main():
 				# When model has successfully run, will print prediction
 				# You can use a dictionary or similar structure to make this output
 				# more human interpretable.
+				
 				st.success("Text Categorized as: {}".format(prediction))				
 
 # Required to let Streamlit instantiate our web app.  
