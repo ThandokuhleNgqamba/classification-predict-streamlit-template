@@ -62,7 +62,7 @@ def main():
 
 	# Creates a main title and subheader on your page -
 	# these are static across all pages
-	st.image(['resources\imgs\cars.jpg', 'resources\imgs\park.jpg'], width= 300)
+	st.image(['resources/imgs/cars.jpg', 'resources/imgs/park.jpg'], width= 300)
 	st.title("Climate Change Tweet Classifier")
 	
 
@@ -85,9 +85,9 @@ def main():
             
 		st.subheader("Insights into the Raw Twitter Data ")
 		st.text('This section explains the raw twitter data used to train the models for this App')
-		st.image(['resources\imgs\piecharttwitet.jpg'], width= 500)
+		st.image('resources/imgs/piecharttwitet.jpg', width= 500)
 		st.text('The dataset contains 15819 tweets across the four sentiment classes. The figure above shows the distribution of the data across the classes. As can be seen, the pro climate change class contains the bulk of the data.')
-		st.image(['resources\imgs\lengthoftweet.jpg'], width= 500)  
+		st.image('resources/imgs/lengthoftweet.jpg', width= 500)  
 		st.text('The figure above represents the average number of words per sentiment class. As can be seen the pro climate change class contains the longest tweets, however, this class does not  differ from the other classes enough to be a significant identifier.')
       
 		st.image('resources/imgs/tags.jpg', width= 500)
