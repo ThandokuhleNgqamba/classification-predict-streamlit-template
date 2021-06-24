@@ -45,6 +45,17 @@ tweet_cv = joblib.load(news_vectorizer) # loading your vectorizer from the pkl f
 # Load your raw data
 raw = pd.read_csv("resources/train.csv")
 
+def  output(prediction):
+    if prediction == -1:
+        st.success('Anti Climate Change')
+    elif prediction == 0:
+        st.success('Neutral Sentiment')
+    elif  prediction == 1:
+        st.success('Support Climate Change')
+    else:
+        st.success('News')
+    
+
 # The main function where we will build the actual app
 def main():
 	"""Tweet Classifier App with Streamlit """
@@ -77,8 +88,12 @@ def main():
 		st.image(['resources\imgs\piecharttwitet.jpg'], width= 500)
 		st.text('The dataset contains 15819 tweets across the four sentiment classes. The figure above shows the distribution of the data across the classes. As can be seen, the pro climate change class contains the bulk of the data.')
 		st.image(['resources\imgs\lengthoftweet.jpg'], width= 500)  
-		st.text('The figure above represents the average number of words per sentiment class. As can be seen the pro climate change class contains the longest tweets, however, this class does not  differ from the other classes enough to be a significant identifier.')        
+		st.text('The figure above represents the average number of words per sentiment class. As can be seen the pro climate change class contains the longest tweets, however, this class does not  differ from the other classes enough to be a significant identifier.')
+      
+		st.image('resources/imgs/tags.jpg', width= 500)
+		st.text('The figure above represents the number of times a tweet was repeated in the dataset. Approximately 14% of the tweets were retweets.')
         
+		st.markdown(open('resources/preprocess.md').read())   
         
 	# Building out the "Meet the team" page
 	if selection == "Meet the Team":
@@ -87,6 +102,8 @@ def main():
 	# Building out the predication page
 	if selection == "Prediction":
 		st.info("Prediction with Machine Learning Models")
+        
+        
 
 		Listmodels = ['Decision Tree','Linear SVM','Logistic Regression']
 		modelselect = st.selectbox('Choose a Model',Listmodels)
@@ -109,7 +126,7 @@ def main():
 				# When model has successfully run, will print prediction
 				# You can use a dictionary or similar structure to make this output
 				# more human interpretable.
-				st.success("Text Categorized as: {}".format(prediction))
+				output(prediction)
 
 		if modelselect == 'Linear SVM':
     			
@@ -129,7 +146,8 @@ def main():
 				# When model has successfully run, will print prediction
 				# You can use a dictionary or similar structure to make this output
 				# more human interpretable.
-				st.success("Text Categorized as: {}".format(prediction))
+				output(prediction)
+
 
 		if modelselect == 'Logistic Regression':
     			
@@ -150,7 +168,8 @@ def main():
 				# You can use a dictionary or similar structure to make this output
 				# more human interpretable.
 				
-				st.success("Text Categorized as: {}".format(prediction))				
+				output(prediction)
+
 
 # Required to let Streamlit instantiate our web app.  
 if __name__ == '__main__':
