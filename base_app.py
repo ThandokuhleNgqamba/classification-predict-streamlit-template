@@ -53,7 +53,7 @@ def main():
 	# these are static across all pages
 	st.image(['resources\imgs\cars.jpg', 'resources\imgs\park.jpg'], width= 300)
 	st.title("Climate Change Tweet Classifier")
-	st.subheader("Tweet Sentiment Classification")
+	
 
 	# Creating sidebar with selection box -
 	# you can create multiple pages this way
@@ -65,18 +65,28 @@ def main():
 		
 		# You can read a markdown file from supporting resources folder
 		st.markdown(open('resources/modelintroduction.md').read())
+        
+	if selection == "Insights":
 
 		st.subheader("Raw Twitter data and label")
 		if st.checkbox('Show raw data'): # data is hidden if box is unchecked
 			st.write(raw[['sentiment', 'message']]) # will write the df to the page
             
+		st.subheader("Insights into the Raw Twitter Data ")
+		st.text('This section explains the raw twitter data used to train the models for this App')
+		st.image(['resources\imgs\piecharttwitet.jpg'], width= 500)
+		st.text('The dataset contains 15819 tweets across the four sentiment classes. The figure above shows the distribution of the data across the classes. As can be seen, the pro climate change class contains the bulk of the data.')
+		st.image(['resources\imgs\lengthoftweet.jpg'], width= 500)  
+		st.text('The figure above represents the average number of words per sentiment class. As can be seen the pro climate change class contains the longest tweets, however, this class does not  differ from the other classes enough to be a significant identifier.')        
+        
+        
 	# Building out the "Meet the team" page
 	if selection == "Meet the Team":
 		st.markdown(open('resources/meettheteam.md').read())
 
 	# Building out the predication page
 	if selection == "Prediction":
-		st.info("Prediction with ML Models")
+		st.info("Prediction with Machine Learning Models")
 
 		Listmodels = ['Decision Tree','Linear SVM','Logistic Regression']
 		modelselect = st.selectbox('Choose a Model',Listmodels)
